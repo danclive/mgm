@@ -2,8 +2,8 @@ package mgm_test
 
 import (
 	"errors"
-	"github.com/Kamva/mgm/v3"
-	"github.com/Kamva/mgm/v3/internal/util"
+	"github.com/danclive/mgm"
+	"github.com/danclive/mgm/internal/util"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"go.mongodb.org/mongo-driver/bson"

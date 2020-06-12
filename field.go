@@ -1,8 +1,9 @@
 package mgm
 
 import (
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // IDField struct contain model's ID field.
@@ -10,11 +11,11 @@ type IDField struct {
 	ID primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 }
 
-// DateFields struct contain `created_at` and `updated_at`
+// DateFields struct contain `created` and `updated`
 // fields that autofill on insert/update model.
 type DateFields struct {
-	CreatedAt time.Time `json:"created_at" bson:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" bson:"updated_at"`
+	CreatedAt time.Time `json:"created" bson:"created"`
+	UpdatedAt time.Time `json:"updated" bson:"updated"`
 }
 
 // PrepareID method prepare id value to using it as id in filtering,...

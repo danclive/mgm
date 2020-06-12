@@ -1,7 +1,7 @@
 package crud
 
 import (
-	"github.com/Kamva/mgm/v3"
+	"github.com/danclive/mgm"
 )
 
 type book struct {

@@ -41,3 +41,6 @@ func (model *DefaultModel) Creating() error {
 func (model *DefaultModel) Saving() error {
 	return model.DateFields.Saving()
 }
+
+var _ Model = &DefaultModel{}
+var _ Model = &IDField{}

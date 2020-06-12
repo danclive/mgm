@@ -3,10 +3,11 @@ package mgm
 import (
 	"context"
 	"errors"
-	"github.com/Kamva/mgm/v3/internal/util"
+	"time"
+
+	"github.com/danclive/mgm/internal/util"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"time"
 )
 
 var config *Config

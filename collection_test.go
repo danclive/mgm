@@ -1,15 +1,16 @@
 package mgm_test
 
 import (
-	"github.com/Kamva/mgm/v3"
-	"github.com/Kamva/mgm/v3/builder"
-	"github.com/Kamva/mgm/v3/internal/util"
-	"github.com/Kamva/mgm/v3/operator"
+	"testing"
+
+	"github.com/danclive/mgm"
+	"github.com/danclive/mgm/builder"
+	"github.com/danclive/mgm/internal/util"
+	"github.com/danclive/mgm/operator"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"testing"
 )
 
 func TestFindByIdWithInvalidId(t *testing.T) {

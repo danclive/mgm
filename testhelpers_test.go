@@ -1,16 +1,17 @@
 package mgm_test
 
 import (
-	"github.com/Kamva/mgm/v3"
-	"github.com/Kamva/mgm/v3/internal/util"
+	"testing"
+
+	"github.com/danclive/mgm"
+	"github.com/danclive/mgm/internal/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"testing"
 )
 
 func setupDefConnection() {
 	util.PanicErr(
-		mgm.SetDefaultConfig(nil, "models", options.Client().ApplyURI("mongodb://root:12345@localhost:27017")),
+		mgm.SetDefaultConfig(nil, "models", options.Client().ApplyURI("mongodb://localhost:27017")),
 	)
 }
 
