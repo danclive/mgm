@@ -1,20 +1,20 @@
 package mgm
 
 import (
+	"reflect"
+
 	"github.com/danclive/mgm/internal/util"
 	"github.com/jinzhu/inflection"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"reflect"
 )
 
 // Coll return model's collection.
-func Coll(m Model, opts ...*options.CollectionOptions) *Collection {
-
+func (c *Connection) Coll(m Model, opts ...*options.CollectionOptions) *Collection {
 	if collGetter, ok := m.(CollectionGetter); ok {
 		return collGetter.Collection()
 	}
 
-	return CollectionByName(CollName(m), opts...)
+	return c.CollectionByName(CollName(m), opts...)
 }
 
 // CollName check if you provided collection name in your

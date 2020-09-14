@@ -2,6 +2,7 @@ package mgm
 
 import (
 	"context"
+
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -9,13 +10,13 @@ import (
 type TransactionFunc func(session mongo.Session, sc mongo.SessionContext) error
 
 // Transaction run a transaction with default client..
-func Transaction(f TransactionFunc) error {
-	return TransactionWithClient(ctx(), client, f)
+func (c *Connection) Transaction(f TransactionFunc) error {
+	return TransactionWithClient(c.Ctx(), c.client, f)
 }
 
 // TransactionWithCtx run transaction with the given context and default client.
-func TransactionWithCtx(ctx context.Context, f TransactionFunc) error {
-	return TransactionWithClient(ctx, client, f)
+func (c *Connection) TransactionWithCtx(ctx context.Context, f TransactionFunc) error {
+	return TransactionWithClient(ctx, c.client, f)
 }
 
 // TransactionWithClient run transaction with the given client.

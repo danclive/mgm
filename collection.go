@@ -2,6 +2,7 @@ package mgm
 
 import (
 	"context"
+
 	"github.com/danclive/mgm/builder"
 	"github.com/danclive/mgm/field"
 	"go.mongodb.org/mongo-driver/bson"
@@ -11,6 +12,7 @@ import (
 
 // Collection performs operations on models and given Mongodb collection
 type Collection struct {
+	*Connection
 	*mongo.Collection
 }
 
@@ -18,7 +20,7 @@ type Collection struct {
 // id field can be any value that if passed to `PrepareID` method, it return
 // valid id(e.g string,bson.ObjectId).
 func (coll *Collection) FindByID(id interface{}, model Model) error {
-	return coll.FindByIDWithCtx(ctx(), id, model)
+	return coll.FindByIDWithCtx(coll.Ctx(), id, model)
 }
 
 // FindByIDWithCtx method find a doc and decode it to model, otherwise return error.
@@ -36,7 +38,7 @@ func (coll *Collection) FindByIDWithCtx(ctx context.Context, id interface{}, mod
 
 // First method search and return first document of search result.
 func (coll *Collection) First(filter interface{}, model Model, opts ...*options.FindOneOptions) error {
-	return coll.FirstWithCtx(ctx(), filter, model, opts...)
+	return coll.FirstWithCtx(coll.Ctx(), filter, model, opts...)
 }
 
 // FirstWithCtx method search and return first document of search result.
@@ -46,7 +48,7 @@ func (coll *Collection) FirstWithCtx(ctx context.Context, filter interface{}, mo
 
 // Create method insert new model into database.
 func (coll *Collection) Create(model Model, opts ...*options.InsertOneOptions) error {
-	return coll.CreateWithCtx(ctx(), model, opts...)
+	return coll.CreateWithCtx(coll.Ctx(), model, opts...)
 }
 
 // CreateWithCtx method insert new model into database.
@@ -58,7 +60,7 @@ func (coll *Collection) CreateWithCtx(ctx context.Context, model Model, opts ...
 // On call to this method also mgm call to model's updating,updated,
 // saving,saved hooks.
 func (coll *Collection) Update(model Model, opts ...*options.UpdateOptions) error {
-	return coll.UpdateWithCtx(ctx(), model, opts...)
+	return coll.UpdateWithCtx(coll.Ctx(), model, opts...)
 }
 
 // UpdateWithCtx function update save changed model into database.
@@ -72,7 +74,7 @@ func (coll *Collection) UpdateWithCtx(ctx context.Context, model Model, opts ...
 // If you want to doing something on deleting some model
 // use hooks, don't need to override this method.
 func (coll *Collection) Delete(model Model) error {
-	return del(ctx(), coll, model)
+	return del(coll.Ctx(), coll, model)
 }
 
 // DeleteWithCtx method delete model (doc) from collection.
@@ -84,7 +86,7 @@ func (coll *Collection) DeleteWithCtx(ctx context.Context, model Model) error {
 
 // SimpleFind find and decode result to results.
 func (coll *Collection) SimpleFind(results interface{}, filter interface{}, opts ...*options.FindOptions) error {
-	return coll.SimpleFindWithCtx(ctx(), results, filter, opts...)
+	return coll.SimpleFindWithCtx(coll.Ctx(), results, filter, opts...)
 }
 
 // SimpleFindWithCtx find and decode result to results.
@@ -111,7 +113,7 @@ func (coll *Collection) SimpleAggregateFirst(result interface{}, stages ...inter
 	if err != nil {
 		return false, err
 	}
-	if cur.Next(ctx()) {
+	if cur.Next(coll.Ctx()) {
 		return true, cur.Decode(result)
 	}
 	return false, nil
@@ -127,7 +129,7 @@ func (coll *Collection) SimpleAggregate(results interface{}, stages ...interface
 		return err
 	}
 
-	return cur.All(ctx(), results)
+	return cur.All(coll.Ctx(), results)
 }
 
 // SimpleAggregateCursor doing simple aggregation and return cursor.
@@ -144,5 +146,5 @@ func (coll *Collection) SimpleAggregateCursor(stages ...interface{}) (*mongo.Cur
 		}
 	}
 
-	return coll.Aggregate(ctx(), pipeline, nil)
+	return coll.Aggregate(coll.Ctx(), pipeline, nil)
 }
